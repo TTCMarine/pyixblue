@@ -1,0 +1,1 @@
+::: pyixblue.decoder.StdBinDecoder

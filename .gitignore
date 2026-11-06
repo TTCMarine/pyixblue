@@ -11,3 +11,6 @@ wheels/
 
 # Test and tool caches
 .pytest_cache/
+
+# MkDocs build output
+site/

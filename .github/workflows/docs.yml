@@ -1,0 +1,32 @@
+# Strict MkDocs build so a broken API reference fails before Read the Docs.
+
+name: Docs
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions: {}
+
+jobs:
+  build:
+    name: Build docs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+        with:
+          enable-cache: false
+
+      - name: Sync locked environment
+        run: uv sync --locked --extra docs
+
+      - name: Build docs
+        run: uv run mkdocs build --strict

@@ -2,7 +2,8 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/pyixblue.svg)](https://pypi.org/project/pyixblue/)
 [![Python versions](https://img.shields.io/pypi/pyversions/pyixblue.svg)](https://pypi.org/project/pyixblue/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Docs](https://img.shields.io/badge/docs-readthedocs-blue.svg)](https://pyixblue.readthedocs.io/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/TTCMarine/pyixblue/blob/main/LICENSE)
 
 Python parser for the iXblue stdbin output protocol (versions 2 through 5).
 

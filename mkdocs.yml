@@ -1,0 +1,38 @@
+site_name: pyixblue
+site_url: https://pyixblue.readthedocs.io/
+repo_url: https://github.com/TTCMarine/pyixblue
+repo_name: TTCMarine/pyixblue
+
+theme:
+  name: material
+
+markdown_extensions:
+  - toc
+  - tables
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            filters: ["!^_"]
+            force_inspection: true
+            heading_level: 1
+            members_order: source
+            show_if_no_docstring: true
+            show_root_heading: true
+            show_signature_annotations: true
+            show_source: false
+
+nav:
+  - Overview: index.md
+  - API:
+      - Decoder: api/decoder.md
+      - Models: api/models.md
+      - Errors: api/errors.md

@@ -1,0 +1,1 @@
+::: pyixblue.errors.StdBinError

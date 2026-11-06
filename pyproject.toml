@@ -18,11 +18,17 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/TTCMarine/pyixblue"
+Documentation = "https://pyixblue.readthedocs.io/"
 Repository = "https://github.com/TTCMarine/pyixblue"
 Issues = "https://github.com/TTCMarine/pyixblue/issues"
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+docs = [
+    "mkdocs>=1.6",
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.26",
+]
 
 [dependency-groups]
 dev = ["pytest>=8"]

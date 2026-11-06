@@ -1,5 +1,9 @@
 # pyixblue
 
+[![PyPI version](https://img.shields.io/pypi/v/pyixblue.svg)](https://pypi.org/project/pyixblue/)
+[![Python versions](https://img.shields.io/pypi/pyversions/pyixblue.svg)](https://pypi.org/project/pyixblue/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 Python parser for the iXblue stdbin output protocol (versions 2 through 5).
 
 stdbin is the binary navigation output of iXblue inertial systems. This package
@@ -11,11 +15,14 @@ The block layout and checksum follow the MIT-licensed
 
 ## Install
 
+From [PyPI](https://pypi.org/project/pyixblue/):
+
 ```sh
-pip install .
+pip install pyixblue
 ```
 
-From a checkout, with the development tests:
+For development, from a checkout (installs the package in editable mode along
+with the test dependencies):
 
 ```sh
 uv sync

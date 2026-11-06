@@ -1,6 +1,6 @@
 [project]
 name = "pyixblue"
-version = "0.9.0"
+version = "0.9.1"
 description = "Python parser for the iXblue stdbin protocol"
 readme = "README.md"
 license = { file = "LICENSE" }

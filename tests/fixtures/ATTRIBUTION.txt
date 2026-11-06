@@ -1,0 +1,1 @@
+Sample frames converted from the MIT-licensed ixblue_stdbin_decoder test logs, Copyright (c) 2019 iXblue SAS.

@@ -176,12 +176,13 @@ class StdBinDecoder:
         blocks: Iterable[Block],
         present: dict[str, object],
     ) -> int:
+        buffer = self._buffer
+        buffer_size = len(buffer)
         for block in blocks:
             if (mask >> block.bit) & 1 == 0:
                 continue
-            if len(self._buffer) - offset < block.size:
+            if buffer_size - offset < block.size:
                 raise StdBinError("Not enough bytes in buffer to parse this memory block")
-            values = struct.unpack_from(block.fmt, self._buffer, offset)
-            present[block.field] = block.build(values)
+            present[block.field] = block.build(*block.struct.unpack_from(buffer, offset))
             offset += block.size
         return offset

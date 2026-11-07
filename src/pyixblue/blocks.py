@@ -10,7 +10,7 @@ decoder constructs no parser for it, so a set extended-mask bit 4 is consumed.
 
 from collections.abc import Callable
 from dataclasses import dataclass, fields
-from struct import calcsize
+from struct import Struct
 from typing import Any
 
 from pyixblue.models import (
@@ -78,29 +78,26 @@ from pyixblue.models import (
 
 @dataclass(frozen=True, slots=True)
 class Block:
-    """One optional memory block identified by a mask bit."""
+    """One optional memory block identified by a mask bit.
+
+    ``build`` takes the unpacked values positionally, in dataclass field order.
+    """
 
     field: str
     bit: int
-    fmt: str
-    build: Callable[[tuple[Any, ...]], Any]
-
-    @property
-    def size(self) -> int:
-        return calcsize(self.fmt)
+    struct: Struct
+    size: int
+    build: Callable[..., Any]
 
 
 def _build(
-    cls: type[Any], converters: tuple[Callable[[int], Any] | None, ...] = ()
-) -> Callable[[tuple[Any, ...]], Any]:
-    names = tuple(item.name for item in fields(cls))
+    cls: type[Any], converters: tuple[Callable[[int], Any], ...]
+) -> Callable[..., Any]:
+    if not converters:
+        return cls
 
-    def build(values: tuple[Any, ...]) -> Any:
-        converted: list[Any] = []
-        for index, value in enumerate(values):
-            converter = converters[index] if index < len(converters) else None
-            converted.append(converter(value) if converter is not None else value)
-        return cls(**dict(zip(names, converted, strict=True)))
+    def build(*values: Any) -> Any:
+        return cls(*[convert(value) for convert, value in zip(converters, values, strict=True)])
 
     return build
 
@@ -110,9 +107,12 @@ def _block(
     bit: int,
     fmt: str,
     cls: type[Any],
-    converters: tuple[Callable[[int], Any] | None, ...] = (),
+    converters: tuple[Callable[[int], Any], ...] = (),
 ) -> Block:
-    return Block(field, bit, fmt, _build(cls, converters))
+    packed = Struct(fmt)
+    if len(packed.unpack(bytes(packed.size))) != len(fields(cls)):
+        raise ValueError(f"{fmt!r} does not match the fields of {cls.__name__}")
+    return Block(field, bit, packed, packed.size, _build(cls, converters))
 
 
 def _sorted(blocks: tuple[Block, ...]) -> tuple[Block, ...]:
